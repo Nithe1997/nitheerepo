@@ -1,2 +1,43 @@
 you are best ever.
 nice job'
+pipeline {
+    agent any // Specifies where the pipeline will execute, e.g., 'any', 'none', or a specific label.
+
+    stages {
+        stage('Build') { // A named stage in the pipeline
+            steps {
+                // Commands or actions to be executed in the 'Build' stage
+                sh 'echo "Building the application..."'
+                sh 'mvn clean install' // Example: Maven build command
+            }
+        }
+
+        stage('Test') { // Another stage for testing
+            steps {
+                // Commands or actions for testing
+                sh 'echo "Running tests..."'
+                sh 'mvn test' // Example: Maven test command
+            }
+        }
+
+        stage('Deploy') { // A stage for deployment
+            steps {
+                // Commands or actions for deployment
+                sh 'echo "Deploying the application..."'
+                // Example: Deploy to a server or artifact repository
+            }
+        }
+    }
+
+    post { // Actions to be executed after the pipeline completes
+        always {
+            echo 'Pipeline finished.'
+        }
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
